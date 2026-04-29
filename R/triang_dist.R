@@ -8,13 +8,13 @@
 #' @export
 #'
 dtriang <- function(x, min, max, mode) {
-  if (min >= max) {
+  if (any(min >= max)) {
     stop("Error: Min has to be smaller than maximum.")
   }
-  else if (mode < min) {
+  else if (any(mode < min)) {
     stop("Error: The mode has to be bigger than the minimum")
   }
-  else if (max < mode) {
+  else if (any(max < mode)) {
     stop("Error: The mode has to be smaller than the maximum")
   }
   #Vectorized inputs
@@ -47,7 +47,6 @@ dtriang <- function(x, min, max, mode) {
 #' @param mode Mode (c)
 #' @export
 ptriang <- function(q, min, max, mode) {
-  # 1. Validaciones
   if (any(min >= max))
     stop("Error: Min has to be smaller than maximum.")
   else if (any(mode < min))
@@ -78,3 +77,43 @@ ptriang <- function(q, min, max, mode) {
 
   return(res)
 }
+
+
+#' @title Quantile function for the Triangular Distribution
+#' @param p Numeric vector of probability
+#' @param min Lower limit (a)
+#' @param max Upper limit (b)
+#' @param mode Mode (c)
+#' @export
+
+qtriang <- function(p, min, max, mode) {
+  if (any(p < 0 | p > 1)) {
+    stop("Error: p is out of range")
+  } else if (any(min >= max)) {
+    stop("Error: Min has to be smaller than maximum.")
+  } else if (any(mode < min)) {
+    stop("Error: The mode has to be bigger than the minimum")
+  } else if (any(max < mode)) {
+    stop("Error: The mode has to be smaller than the maximum")
+  }
+  #Recycling (for vectors)
+  n <- max(length(p), length(min), length(max), length(mode))
+  p <- rep(p, length.out = n)
+  min <- rep(min, length.out = n)
+  max <- rep(max, length.out = n)
+  mode <- rep(mode, length.out = n)
+
+  res <- numeric(n)
+  #Defining p_mode(area of the first(left) subtriangle)
+  p_mode <- (mode - min) / (max - min)
+  #First situation: p_mode < p
+  left_part <- p_mode > p
+  res[left_part] <- min[left_part] + sqrt((p[left_part]) * (max[left_part] - min[left_part]) * (mode[left_part] - min[left_part]))
+
+  #Second situation: p_mode > p
+  right_part <- p_mode <= p
+  res[right_part] <- max[right_part] - sqrt((1 - p[right_part]) * (max[right_part] - min[right_part]) * (max[right_part] - mode[right_part]))
+
+  return(res)
+}
+
