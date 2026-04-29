@@ -122,6 +122,7 @@ qtriang <- function(p, min, max, mode) {
 #' @param min Lower limit (a)
 #' @param max Upper limit (b)
 #' @param mode Mode (c)
+#' @importFrom stats runif
 #' @export
 rtriang <- function(n, min, max, mode) {
 
