@@ -117,3 +117,21 @@ qtriang <- function(p, min, max, mode) {
   return(res)
 }
 
+#' @title Random generation for the Triangular Distribution
+#' @param n Number of observations
+#' @param min Lower limit (a)
+#' @param max Upper limit (b)
+#' @param mode Mode (c)
+#' @export
+rtriang <- function(n, min, max, mode) {
+
+  if (length(n) > 1) n <- length(n)
+  if (n < 0) stop("n must be a non-negative integer")
+  if (n == 0) return(numeric(0))
+
+  u <- runif(n)
+
+  res <- qtriang(p = u, min = min, max = max, mode = mode)
+
+  return(res)
+}
