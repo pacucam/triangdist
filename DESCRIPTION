@@ -2,7 +2,7 @@ Package: triangdist
 Title: Implementation of the Triangular Distribution
 Version: 0.1.0
 Authors@R: 
-    person("pacucam@alumni.uv.es", role = c("aut", "cre"))
+    person("Pablo", "Cucala Campesino", email = "pacucam@alumni.uv.es", role = c("aut", "cre"))
 Description: This package provides functions for the triangular distribution, 
     including density (dtriang), distribution (ptriang), quantile (qtriang), 
     and random generation (rtriang). It is fully vectorized and tested.
