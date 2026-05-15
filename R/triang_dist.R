@@ -1,4 +1,5 @@
-#This .R document is for the creation of the 4 demanded functions of the package.
+#This .R document is for the creation of the 4 demanded functions 
+#of the package.
 
 #' @title Density function for the Triangular Distribution
 #' @param x Numeric vector of quantiles
@@ -10,11 +11,9 @@
 dtriang <- function(x, min, max, mode) {
   if (any(min >= max)) {
     stop("Error: Min has to be smaller than maximum.")
-  }
-  else if (any(mode < min)) {
+  } else if (any(mode < min)) {
     stop("Error: The mode has to be bigger than the minimum")
-  }
-  else if (any(max < mode)) {
+  } else if (any(max < mode)) {
     stop("Error: The mode has to be smaller than the maximum")
   }
   #Vectorized inputs
@@ -28,11 +27,13 @@ dtriang <- function(x, min, max, mode) {
   #First situation: a<=x<c
   left_part <- min <= x & mode >= x
   res[left_part] <- (2 * (x[left_part]-min[left_part])) /
-                       ((max[left_part] - min[left_part]) * (mode[left_part] - min[left_part]))
+                       ((max[left_part] - min[left_part]) * 
+                          (mode[left_part] - min[left_part]))
   #Second situation: c<x<=b
   right_part <- mode <= x & max >= x
   res[right_part] <- ((-2 * (x[right_part] - max[right_part])) /
-                        ((max[right_part] - min[right_part]) * (max[right_part] - mode[right_part])))
+                        ((max[right_part] - min[right_part]) * 
+                           (max[right_part] - mode[right_part])))
   #Last situation: if c = x
   res[x == mode] <- h
 
@@ -73,10 +74,12 @@ ptriang <- function(q, min, max, mode) {
     ((max[right_part] - min[right_part]) * (max[right_part] - mode[right_part]))
 
   #Last situation: q > max
-  res[q > max] = 1
+  res[q > max] <- 1
 
   return(res)
 }
+
+
 
 
 #' @title Quantile function for the Triangular Distribution
