@@ -80,6 +80,8 @@ ptriang <- function(q, min, max, mode) {
 }
 
 
+
+
 #' @title Quantile function for the Triangular Distribution
 #' @param p Numeric vector of probability
 #' @param min Lower limit (a)
